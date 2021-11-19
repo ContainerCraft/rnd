@@ -50,5 +50,5 @@ jobs:
         echo
         kubectl get events -A
         kubectl describe vm ubuntu
-        sleep 240
-        ssh -o StrictHostKeyChecking=no -p30950 kc2user@127.0.0.1 screenfetch
+        sleep 270
+        ssh -o StrictHostKeyChecking=no -p30950 kc2user@127.0.0.1 screenfetch || ssh -o StrictHostKeyChecking=no -p30950 kc2user@127.0.0.1 whoami
