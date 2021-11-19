@@ -1,6 +1,6 @@
 # docker volume create worker1-containerd
 # docker volume create control1-containerd
-# kind create cluster --config kind/config.yml
+# kind create cluster --config kind/config.yaml
 
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
