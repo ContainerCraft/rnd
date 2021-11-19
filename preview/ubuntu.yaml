@@ -28,20 +28,10 @@ spec:
       nodeSelector:
         test: "qubo"
       domain:
-        clock:
-          utc: {}
-          timer: {}
-        cpu:
-          cores: 1
-          sockets: 1
-          threads: 2
-#         model: host-passthrough
-          dedicatedCpuPlacement: false
         devices:
-          rng: {}
-          autoattachPodInterface: false
+          autoattachPodInterface: true
           autoattachSerialConsole: true
-          autoattachGraphicsDevice: true
+          autoattachGraphicsDevice: false
           networkInterfaceMultiqueue: false
           disks:
             - name: containerdisk
@@ -51,28 +41,24 @@ spec:
             - name: cloudinitdisk
               disk:
                 bus: virtio
-          interfaces:
-          - name: enp1s0
-            model: virtio
-            bridge: {}
-        features:
-          acpi:
-            enabled: true
-          smm:
-            enabled: true
-        firmware:
-          bootloader:
-            efi:
-              secureBoot: true
+#       features:
+#         acpi:
+#           enabled: true
+#         smm:
+#           enabled: true
+#       firmware:
+#         bootloader:
+#           efi:
+#             secureBoot: true
         resources:
           limits:
             memory: 1G
           requests:
             memory: 1G
       hostname: ubuntu
-      networks:
-      - name: enp1s0
-        pod: {}
+#     networks:
+#     - name: enp1s0
+#       pod: {}
       terminationGracePeriodSeconds: 0
       accessCredentials:
       - sshPublicKey:
