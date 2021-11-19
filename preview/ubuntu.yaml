@@ -67,10 +67,8 @@ spec:
         resources:
           limits:
             memory: 1G
-            devices.kubevirt.io/kvm: "1"
           requests:
             memory: 1G
-            devices.kubevirt.io/kvm: "1"
       hostname: ubuntu
       networks:
       - name: enp1s0

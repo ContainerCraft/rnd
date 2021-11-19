@@ -28,12 +28,12 @@ jobs:
       run: |
         kubectl cluster-info
         kubectl get storageclass standard
+        kubectl get nodes -oyaml | grep 'test:' && echo "detected node label 'qubo=test'"
         ls $HOME/.ssh/id_rsa || ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa
         kubectl create secret generic kargo-sshpubkey-kc2user --from-file=key1=$HOME/.ssh/id_rsa.pub
 
     - name: Test Cluster
       run: |
-        get nodes -oyaml | grep 'test:' && echo "detected node label 'qubo=test'"
         kubectl create ns kubevirt
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-operator.yaml
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-cr.yaml
