@@ -27,8 +27,6 @@ spec:
     spec:
       nodeSelector:
         test: "qubo"
-        kubevirt.io/schedulable: "true"
-        cpu-vendor.node.kubevirt.io/Intel: "true"
       domain:
         clock:
           utc: {}

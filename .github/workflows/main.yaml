@@ -33,18 +33,22 @@ jobs:
 
     - name: Test Cluster
       run: |
+        get nodes -oyaml | grep 'test:' && echo "detected node label 'qubo=test'"
         kubectl create ns kubevirt
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-operator.yaml
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-cr.yaml
         sleep 4
         kubectl create configmap kubevirt-config -n kubevirt --from-literal debug.useEmulation=true
-        sleep 120
+        sleep 90
         kubectl get po -A
         echo
         kubectl apply -f preview/ubuntu.yaml
         sleep 120
         kubectl get po -A
-        sleep 120
+        sleep 90
         kubectl get po -A
         echo
-        ssh -p30950 kc2user@127.0.0.1 screenfetch
+        kubectl get events -A
+        kubectl describe vm ubuntu
+        sleep 4
+        ssh -p30950 kc2user@127.0.0.1 screenfetch 
