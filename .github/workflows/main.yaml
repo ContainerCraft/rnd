@@ -31,8 +31,8 @@ jobs:
         kubectl create ns kubevirt
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-operator.yaml
         kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-cr.yaml
-       #kubectl create configmap kubevirt-config -n kubevirt --from-literal debug.useEmulation=true
         sleep 120
         kubectl apply -f preview/ubuntu.yaml
         sleep 120
         ssh -p30950 kc2user@127.0.0.1 screenfetch
+       #kubectl create configmap kubevirt-config -n kubevirt --from-literal debug.useEmulation=true
