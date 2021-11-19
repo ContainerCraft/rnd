@@ -1,0 +1,38 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - releases/*
+
+jobs:
+  qubo-testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create kind cluster QuboCI
+      uses: helm/kind-action@v1.2.0
+      with:
+        cluster_name: "qubo-ci"
+        config: kind/config.yaml
+
+    - name: Test Cluster
+      run: |
+        kubectl cluster-info
+        kubectl get storageclass standard
+
+    - name: Test Cluster
+      run: |
+        ls $HOME/.ssh/id_rsa || ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa
+        kubectl create secret generic kargo-sshpubkey-kc2user --from-file=key1=$HOME/.ssh/id_rsa.pub
+        kubectl create ns kubevirt
+        kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-operator.yaml
+        kubectl apply -nkubevirt -f https://github.com/kubevirt/kubevirt/releases/download/v0.47.1/kubevirt-cr.yaml
+       #kubectl create configmap kubevirt-config -n kubevirt --from-literal debug.useEmulation=true
+        sleep 120
+        kubectl apply -f preview/ubuntu.yaml
+        sleep 120
+        ssh -p30950 kc2user@127.0.0.1 screenfetch
